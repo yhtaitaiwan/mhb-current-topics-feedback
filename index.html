@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Current Topics Feedback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  /* ─── PASTE YOUR GOOGLE FORM ENTRY IDs at the bottom of this file ─── */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal-50:  #E1F5EE;
+    --teal-100: #9FE1CB;
+    --teal-400: #1D9E75;
+    --teal-600: #0F6E56;
+    --teal-800: #085041;
+    --red-400:  #E24B4A;
+    --gray-50:  #F8F7F4;
+    --gray-100: #EFECE6;
+    --gray-200: #DDD9D0;
+    --gray-400: #9E9A91;
+    --gray-600: #5F5E5A;
+    --gray-900: #1C1B18;
+    --white:    #FFFFFF;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+    --font: 'DM Sans', system-ui, sans-serif;
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --ease: .18s cubic-bezier(.4,0,.2,1);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); background: var(--gray-50); color: var(--gray-900); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--teal-800);
+    background-image: radial-gradient(ellipse at 80% 0%, rgba(29,158,117,.3) 0%, transparent 60%);
+    color: #fff;
+    padding: 0 24px;
+  }
+  .site-header-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 0 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .site-header h1 { font-family: var(--font-serif); font-size: clamp(24px, 4vw, 30px); font-weight: 400; line-height: 1.2; }
+  .anon-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .anon-chip::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--teal-100); }
+
+  /* ── Layout ── */
+  .page { max-width: 780px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  /* ── Lecturer bar ── */
+  .lec-bar {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 18px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow-sm);
+  }
+  .lec-bar label { font-size: 13px; font-weight: 500; color: var(--gray-600); flex-shrink: 0; }
+  .lec-bar select {
+    flex: 1; min-width: 200px; height: 40px; padding: 0 32px 0 12px;
+    border: 1.5px solid var(--gray-200); border-radius: var(--radius-sm);
+    font-family: var(--font); font-size: 14px; color: var(--gray-900);
+    background: var(--gray-50); cursor: pointer;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239E9A91' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center;
+    transition: border-color var(--ease);
+  }
+  .lec-bar select:focus { outline: none; border-color: var(--teal-400); }
+
+  /* ── Section card ── */
+  .section-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-bottom: 20px; overflow: hidden; box-shadow: var(--shadow-sm); }
+  .section-head { padding: 13px 24px; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; }
+  .section-head-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--gray-400); }
+  .q-chip { font-size: 11px; font-weight: 600; color: var(--teal-600); background: var(--teal-50); padding: 2px 9px; border-radius: 100px; }
+
+  /* ── Question row ── */
+  .q-row { padding: 20px 24px; border-bottom: 1px solid var(--gray-100); }
+  .q-row:last-child { border-bottom: none; }
+  .q-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+  .q-num { font-size: 11px; font-weight: 600; color: var(--teal-600); background: var(--teal-50); padding: 2px 8px; border-radius: 100px; flex-shrink: 0; }
+  .q-text { font-size: 14px; line-height: 1.55; }
+
+  /* ── Scale ── */
+  .scale { display: flex; align-items: center; gap: 12px; }
+  .scale-lbl { font-size: 11px; color: var(--gray-400); width: 80px; flex-shrink: 0; line-height: 1.3; }
+  .scale-lbl.right { text-align: right; }
+  .scale-btns { display: flex; gap: 7px; flex: 1; }
+  .scale-btns label { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+  .scale-btns input[type="radio"] { display: none; }
+  .pip {
+    width: 100%; height: 40px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--gray-200); background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500; color: var(--gray-400);
+    transition: all var(--ease); cursor: pointer; user-select: none;
+  }
+  .scale-btns label:hover .pip { border-color: var(--teal-400); color: var(--teal-600); background: var(--teal-50); }
+  .scale-btns input:checked ~ .pip { background: var(--teal-400); border-color: var(--teal-400); color: #fff; box-shadow: 0 2px 8px rgba(29,158,117,.3); }
+  .pip-n { font-size: 10px; color: var(--gray-400); }
+
+  /* ── Open question ── */
+  .open-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-bottom: 20px; overflow: hidden; box-shadow: var(--shadow-sm); }
+  .open-body { padding: 20px 24px; }
+  .open-body label { display: block; font-size: 14px; line-height: 1.55; margin-bottom: 12px; }
+  .open-body textarea {
+    width: 100%; min-height: 90px; padding: 11px 14px;
+    border: 1.5px solid var(--gray-200); border-radius: var(--radius-md);
+    font-family: var(--font); font-size: 14px; color: var(--gray-900);
+    background: var(--gray-50); resize: vertical; line-height: 1.6;
+    transition: border-color var(--ease), box-shadow var(--ease);
+  }
+  .open-body textarea:focus { outline: none; border-color: var(--teal-400); background: var(--white); box-shadow: 0 0 0 3px rgba(29,158,117,.08); }
+  .open-body textarea::placeholder { color: var(--gray-400); }
+  .opt-tag { font-size: 11px; font-weight: 500; color: var(--gray-400); background: var(--gray-100); padding: 2px 8px; border-radius: 100px; margin-left: 8px; vertical-align: middle; }
+
+  /* ── Submit bar ── */
+  .submit-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; gap: 16px; flex-wrap: wrap; }
+  .progress-wrap { min-width: 160px; }
+  .progress-label { font-size: 12px; color: var(--gray-400); margin-bottom: 6px; }
+  .progress-track { width: 160px; height: 3px; background: var(--gray-200); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--teal-400); border-radius: 2px; transition: width .3s ease; }
+  .btn-submit {
+    font-family: var(--font); font-size: 14px; font-weight: 500;
+    padding: 11px 28px; border-radius: var(--radius-md); border: none; cursor: pointer;
+    background: var(--teal-400); color: #fff;
+    box-shadow: 0 2px 8px rgba(29,158,117,.25);
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all var(--ease);
+  }
+  .btn-submit:hover:not(:disabled) { background: var(--teal-600); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(29,158,117,.35); }
+  .btn-submit:disabled { background: var(--gray-200); color: var(--gray-400); box-shadow: none; cursor: not-allowed; transform: none; }
+
+  /* ── Thank-you screen ── */
+  .thankyou {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 64px 24px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .thankyou.show { display: flex; }
+  .ty-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--teal-50); display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .ty-icon svg { width: 28px; height: 28px; }
+  .thankyou h2 { font-family: var(--font-serif); font-size: 24px; font-weight: 400; margin-bottom: 10px; }
+  .thankyou p { font-size: 14px; color: var(--gray-600); line-height: 1.6; max-width: 340px; }
+  .btn-another {
+    margin-top: 28px;
+    font-family: var(--font); font-size: 13px; font-weight: 500;
+    padding: 9px 22px; border-radius: var(--radius-md);
+    border: 1.5px solid var(--gray-200); background: var(--white);
+    color: var(--gray-600); cursor: pointer; transition: all var(--ease);
+  }
+  .btn-another:hover { border-color: var(--teal-400); color: var(--teal-600); }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    background: var(--teal-800); color: var(--teal-100);
+    font-size: 13px; font-weight: 500; padding: 10px 20px;
+    border-radius: var(--radius-md); opacity: 0; pointer-events: none;
+    transition: all .3s ease; white-space: nowrap; z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── Responsive ── */
+  @media (max-width: 560px) {
+    .scale-lbl { display: none; }
+    .scale-btns { gap: 5px; }
+    .q-row { padding: 16px; }
+    .section-head, .open-body { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <h1>Current Topics Feedback</h1>
+    <div class="anon-chip">Anonymous</div>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ── Survey form ── -->
+  <div id="survey-wrap">
+    <div class="lec-bar">
+      <label for="lec-sel">Lecturer</label>
+      <select id="lec-sel" onchange="chk()">
+        <option value="">Select lecturer…</option>
+        <option value="Prof. Dr. Heinrich Leonhardt">Prof. Dr. Heinrich Leonhardt</option>
+        <option value="Dr. Veronica Pravata">Dr. Veronica Pravata</option>
+        <option value="Prof. Dr. Sabine Steffens">Prof. Dr. Sabine Steffens</option>
+        <option value="Prof. Dr. Irmela Jeremias">Prof. Dr. Irmela Jeremias</option>
+        <option value="Prof. Dr. Martin Kerschensteiner">Prof. Dr. Martin Kerschensteiner</option>
+        <option value="Prof. Dr. Sebastian Kobold">Prof. Dr. Sebastian Kobold</option>
+        <option value="Prof. Dr. Sebastian Suerbaum">Prof. Dr. Sebastian Suerbaum</option>
+        <option value="Prof. Dr. Markus Diefenbacher">Prof. Dr. Markus Diefenbacher</option>
+        <option value="Prof. Dr. Christof Osman">Prof. Dr. Christof Osman</option>
+        <option value="Prof. Dr. Marion Subklewe">Prof. Dr. Marion Subklewe</option>
+        <option value="Prof. Dr. Thomas Brocker">Prof. Dr. Thomas Brocker</option>
+        <option value="Prof. Dr. Kirsten Jung">Prof. Dr. Kirsten Jung</option>
+        <option value="Dr. Daniel Richter">Dr. Daniel Richter</option>
+        <option value="Prof. Dr. Laura Busse">Prof. Dr. Laura Busse</option>
+        <option value="Prof. Dr. Ingrid Boekhoff">Prof. Dr. Ingrid Boekhoff</option>
+      </select>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="section-card">
+      <div class="section-head">
+        <span class="section-head-label">Section 1 — Lecture survey</span>
+        <span class="q-chip">4 questions</span>
+      </div>
+      <div class="q-row">
+        <div class="q-header"><span class="q-num">1.1</span><span class="q-text">The lecturer clearly communicated the learning objectives.</span></div>
+        <div class="scale"><div class="scale-lbl">Fully agree</div><div class="scale-btns" id="s_q1_1"></div><div class="scale-lbl right">Does not apply at all</div></div>
+      </div>
+      <div class="q-row">
+        <div class="q-header"><span class="q-num">1.2</span><span class="q-text">The session was well structured.</span></div>
+        <div class="scale"><div class="scale-lbl">Fully agree</div><div class="scale-btns" id="s_q1_2"></div><div class="scale-lbl right">Does not apply at all</div></div>
+      </div>
+      <div class="q-row">
+        <div class="q-header"><span class="q-num">1.3</span><span class="q-text">The lecturer adequately responded to questions and suggestions.</span></div>
+        <div class="scale"><div class="scale-lbl">Fully agree</div><div class="scale-btns" id="s_q1_3"></div><div class="scale-lbl right">Does not apply at all</div></div>
+      </div>
+      <div class="q-row">
+        <div class="q-header"><span class="q-num">1.4</span><span class="q-text">Overall, I rate this seminar as:</span></div>
+        <div class="scale"><div class="scale-lbl">Very good</div><div class="scale-btns" id="s_q1_4"></div><div class="scale-lbl right">Unsatisfactory</div></div>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="section-card">
+      <div class="section-head">
+        <span class="section-head-label">Section 2 — Self-assessment &amp; outlook</span>
+        <span class="q-chip">3 questions</span>
+      </div>
+      <div class="q-row">
+        <div class="q-header"><span class="q-num">2.1</span><span class="q-text">I was sufficiently prepared to ask in-depth questions.</span></div>
+        <div class="scale"><div class="scale-lbl">Fully agree</div><div class="scale-btns" id="s_q2_1"></div><div class="scale-lbl right">Does not apply at all</div></div>
+      </div>
+      <div class="q-row">
+        <div class="q-header"><span class="q-num">2.2</span><span class="q-text">My understanding of the topic developed further through this seminar.</span></div>
+        <div class="scale"><div class="scale-lbl">Fully agree</div><div class="scale-btns" id="s_q2_2"></div><div class="scale-lbl right">Does not apply at all</div></div>
+      </div>
+      <div class="q-row">
+        <div class="q-header"><span class="q-num">2.3</span><span class="q-text">The topics covered in the seminars interested me.</span></div>
+        <div class="scale"><div class="scale-lbl">Fully agree</div><div class="scale-btns" id="s_q2_3"></div><div class="scale-lbl right">Does not apply at all</div></div>
+      </div>
+    </div>
+
+    <!-- Open question -->
+    <div class="open-card">
+      <div class="section-head">
+        <span class="section-head-label">Additional comments</span>
+        <span class="q-chip" style="background:var(--gray-100);color:var(--gray-600);">Optional</span>
+      </div>
+      <div class="open-body">
+        <label for="open-comment">Do you have any additional comments or suggestions?<span class="opt-tag">Optional</span></label>
+        <textarea id="open-comment" placeholder="Write your comments here…"></textarea>
+      </div>
+    </div>
+
+    <div class="submit-bar">
+      <div class="progress-wrap">
+        <div class="progress-label" id="prog-lbl">0 of 7 answered</div>
+        <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+      <button class="btn-submit" id="sub-btn" onclick="doSubmit()" disabled>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 7-7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Submit response
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Thank-you screen ── -->
+  <div class="thankyou" id="thankyou">
+    <div class="ty-icon">
+      <svg viewBox="0 0 28 28" fill="none"><path d="M5 14l6 6L23 8" stroke="#1D9E75" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h2>Thank you!</h2>
+    <p>Your response has been submitted anonymously. Your feedback helps improve teaching quality.</p>
+    <button class="btn-another" onclick="resetForm()">Submit another response</button>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+const SHEETDB_URL = 'https://sheetdb.io/api/v1/z90kw46059mwu';
+
+const QUESTIONS = ['q1_1','q1_2','q1_3','q1_4','q2_1','q2_2','q2_3'];
+const ANS = {};
+
+// Build scale buttons
+QUESTIONS.forEach(qid => {
+  const container = document.getElementById('s_' + qid);
+  for (let v = 1; v <= 5; v++) {
+    container.insertAdjacentHTML('beforeend',
+      `<label>
+        <input type="radio" name="${qid}" value="${v}" onchange="pick('${qid}',${v})">
+        <div class="pip">${v}</div>
+        <span class="pip-n">${v}</span>
+      </label>`
+    );
+  }
+});
+
+function pick(qid, v) { ANS[qid] = v; chk(); }
+
+function chk() {
+  const done = Object.keys(ANS).length;
+  const total = QUESTIONS.length;
+  const lecOk = document.getElementById('lec-sel').value !== '';
+  document.getElementById('prog-lbl').textContent = done + ' of ' + total + ' answered';
+  document.getElementById('prog-fill').style.width = Math.round(done / total * 100) + '%';
+  document.getElementById('sub-btn').disabled = !(done === total && lecOk);
+}
+
+async function doSubmit() {
+  const lec = document.getElementById('lec-sel').value;
+  if (!lec || Object.keys(ANS).length < QUESTIONS.length) return;
+
+  const btn = document.getElementById('sub-btn');
+  btn.disabled = true;
+  btn.innerHTML = 'Submitting…';
+
+  const comment = document.getElementById('open-comment').value.trim();
+
+  const payload = {
+    data: {
+      Timestamp: new Date().toLocaleString('de-DE'),
+      Lecturer:  String(lec),
+      Q1_1:      String(ANS.q1_1 || ''),
+      Q1_2:      String(ANS.q1_2 || ''),
+      Q1_3:      String(ANS.q1_3 || ''),
+      Q1_4:      String(ANS.q1_4 || ''),
+      Q2_1:      String(ANS.q2_1 || ''),
+      Q2_2:      String(ANS.q2_2 || ''),
+      Q2_3:      String(ANS.q2_3 || ''),
+      Comments:  String(comment)
+    }
+  };
+
+  // Debug — open browser console (F12) to see exactly what is being sent
+  console.log('Submitting payload:', JSON.stringify(payload, null, 2));
+
+  try {
+    const res = await fetch(SHEETDB_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    // Safely parse response — don't let a non-JSON reply trigger the error
+    let json = {};
+    try { json = await res.json(); } catch (_) {}
+    console.log('SheetDB response:', json, 'HTTP status:', res.status);
+    // SheetDB returns {created: 1} on success
+    document.getElementById('survey-wrap').style.display = 'none';
+    document.getElementById('thankyou').classList.add('show');
+  } catch (e) {
+    // Only a true network failure reaches here
+    console.error('SheetDB error:', e);
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 7-7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Submit response';
+    alert('Network error — please check your connection and try again.');
+  }
+}
+
+function resetForm() {
+  QUESTIONS.forEach(qid => {
+    document.querySelectorAll(`input[name="${qid}"]`).forEach(el => el.checked = false);
+    delete ANS[qid];
+  });
+  document.getElementById('open-comment').value = '';
+  document.getElementById('lec-sel').value = '';
+  chk();
+  document.getElementById('thankyou').classList.remove('show');
+  document.getElementById('survey-wrap').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
